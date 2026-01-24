@@ -27,4 +27,24 @@ public class NQueens_52 {
         }
         return true;
     }
+
+    //用位运算实现递归版本
+    public int totalNQueens2(int n) {
+        int limit = (1<<n) -1;
+        return f2(limit,0,0,0);
+    }
+    public int f2(int limit,int col,int left,int right){
+        if(col == limit){
+            return 1;
+        }
+        int cadidate = col | left | right;
+        cadidate = ((~cadidate) & limit);
+        int ans = 0;
+        while(cadidate != 0){
+            int choice = cadidate & (~cadidate+1);
+            cadidate ^= choice;
+            ans += f2(limit,col | choice,(left | choice)<<1 ,(right | choice) >>1);
+        }
+        return ans;
+    }
 }
