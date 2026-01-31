@@ -26,6 +26,7 @@ public class Lanqiao_7 {
             list.add(sb);
             last++;
         }
+        return 0l;
 
     }
 }
