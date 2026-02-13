@@ -35,6 +35,7 @@ public class Code01_TrieTree {
             root.pass--;
             for (char c : array) {
                 int index = c-'a';
+                //这个方法我实现的时候，必须要确保word存在于前缀树中
                 node = node.next[index];
                 node.pass--;
             }
