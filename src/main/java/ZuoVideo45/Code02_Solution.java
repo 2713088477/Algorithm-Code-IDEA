@@ -1,7 +1,7 @@
 package ZuoVideo45;
 
 import java.util.Arrays;
-
+//测试链接:https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/description/
 public class Code02_Solution {
 
     public static int high;

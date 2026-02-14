@@ -2,7 +2,7 @@ package ZuoVideo45;
 
 import java.util.HashSet;
 import java.util.Set;
-
+//测试链接:https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/description/
 public class Code03_Solution {
     public static int high;
     public int findMaximumXOR(int[] nums) {
