@@ -1,5 +1,7 @@
 package LeetCodeHot100;
 
+import java.util.Objects;
+
 public class Solution_693 {
     public boolean hasAlternatingBits(int n) {
         int highBit=31;
