@@ -1,7 +1,7 @@
 package ZuoVideo48;
 
 import java.io.*;
-//测试链接:
+//测试链接:https://www.luogu.com.cn/problem/P3397
 public class Code03_Luogu3397 {
     public static int MAX_N = 1002;
     public static int[][] arr= new int[MAX_N][MAX_N];

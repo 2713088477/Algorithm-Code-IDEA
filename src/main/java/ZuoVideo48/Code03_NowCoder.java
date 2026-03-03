@@ -13,9 +13,9 @@ public class Code03_NowCoder {
         StreamTokenizer in = new StreamTokenizer(br);
         PrintWriter out  = new PrintWriter(new OutputStreamWriter(System.out));
         while(in.nextToken() != -1){
-            row=(int)in.nval;in.nextToken();
-            col=(int)in.nval;in.nextToken();
-            q=(int)in.nval;in.nextToken();
+            row=(int)in.nval;
+            in.nextToken();col=(int)in.nval;
+            in.nextToken();q=(int)in.nval;
             for(int i=1;i<=row;i++){
                 for(int j=1;j<=col;j++){
                     in.nextToken();
@@ -23,11 +23,11 @@ public class Code03_NowCoder {
                 }
             }
             for(int i=0,lx,ly,rx,ry,v;i<q;i++){
-                lx=(int)in.nval;in.nextToken();
-                ly=(int)in.nval;in.nextToken();
-                rx=(int)in.nval;in.nextToken();
-                ry=(int)in.nval;in.nextToken();
-                v =(int)in.nval;in.nextToken();
+                in.nextToken();lx=(int)in.nval;
+                in.nextToken();ly=(int)in.nval;
+                in.nextToken();rx=(int)in.nval;
+                in.nextToken();ry=(int)in.nval;
+                in.nextToken();v =(int)in.nval;
                 add(lx,ly,rx,ry,v);
             }
             build();
