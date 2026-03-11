@@ -6,27 +6,17 @@ import java.util.*;
 //TODO 这道题我写的有问题
 public class Solution_49 {
     public List<List<String>> groupAnagrams(String[] strs) {
-        Map<char[],List<Integer>> map = new HashMap<>();
-        for(int i=0;i<strs.length;i++){
-            char[] array = strs[i].toCharArray();
+        Map<String,List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] array = str.toCharArray();
             Arrays.sort(array);
-            if(map.containsKey(array)){
-                map.get(array).add(i);
-            }else{
-                map.put(array,new ArrayList<>());
-                map.get(array).add(i);
-            }
+            String key = new String(array);
+            map.computeIfAbsent(key, k -> new ArrayList<>()).add(str);
         }
-        Set<Map.Entry<char[], List<Integer>>> entries = map.entrySet();
         List<List<String>> ans = new ArrayList<>();
-        int index=0;
-        for (Map.Entry<char[], List<Integer>> entry : entries) {
-            ans.add(new ArrayList<>());
-            for (int i = 0; i < entry.getValue().size(); i++) {
-                ans.get(index).add(strs[i]);
-            }
-            index++;
-
+        Set<Map.Entry<String, List<String>>> entries = map.entrySet();
+        for (Map.Entry<String, List<String>> entry : entries) {
+            ans.add(entry.getValue());
         }
         return ans;
     }
