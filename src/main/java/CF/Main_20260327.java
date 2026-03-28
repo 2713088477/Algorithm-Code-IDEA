@@ -1,10 +1,7 @@
 package CF;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 //TODO:连接:https://codeforces.com/contest/2201/problem/A1
 public class Main_20260327{
@@ -31,23 +28,14 @@ public class Main_20260327{
         br.close();
     }
     public static int f(){
-        Map<Integer,Integer> map = new HashMap<>();
-        Arrays.sort(arr,0,n);
+        int ans =0;
+        Set<Integer> set = new HashSet<>();
         for(int i=0;i<n;i++){
-            if(map.containsKey((arr[i]-1))){
-                if(map.containsKey(arr[i]-2)){
-                    if(map.get(arr[i]-1)==1) map.remove(arr[i]-1);
-                    else map.put(arr[i]-1,map.get(arr[i]-1)-1);
-                }
-
-            }else{
-                map.put(arr[i],map.getOrDefault(arr[i],0)+1);
+            if(!set.contains(arr[i]-1)){
+                ans ++;
+                set.clear();
             }
-        }
-        Set<Map.Entry<Integer, Integer>> entries = map.entrySet();
-        int ans = 0;
-        for (Map.Entry<Integer, Integer> entry : entries) {
-            ans += entry.getValue();
+            set.add(arr[i]);
         }
         return ans;
 
