@@ -3,7 +3,8 @@ package CF;
 import java.io.*;
 import java.util.*;
 
-//TODO:连接:https://codeforces.com/contest/2201/problem/A1
+//测试连接:https://codeforces.com/contest/2201/problem/A1
+//数据结构:单调栈
 public class Main_20260327{
     public static int MAX_SIZE = (int)3e5+1;
     public static int n;
@@ -28,17 +29,25 @@ public class Main_20260327{
         br.close();
     }
     public static int f(){
-        int ans =0;
-        Set<Integer> set = new HashSet<>();
-        for(int i=0;i<n;i++){
-            if(!set.contains(arr[i]-1)){
+        int ans = 0;
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.addLast(arr[0]);
+        int top = arr[0];
+        for(int i=1;i<n;i++){
+            if(arr[i]==top+1 || (arr[i]>deque.peekFirst()&&arr[i]<=top)){
+                deque.addLast(arr[i]);
+                top = arr[i];
+            }else{
                 ans ++;
-                set.clear();
+                while(!deque.isEmpty()){
+                    deque.removeLast();
+                }
+                deque.add(arr[i]);
+                top = arr[i];
             }
-            set.add(arr[i]);
         }
+        if(!deque.isEmpty()) ans += 1;
         return ans;
-
     }
 
 }
