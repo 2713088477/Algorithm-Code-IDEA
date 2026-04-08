@@ -2,6 +2,7 @@ package SKOJ;
 
 import java.io.*;
 
+//测试连接:https://oj.saikr.com/problem-set/105/task?problem_id=1300
 public class Main_1300 {
     public static int p,q,r;
     public static void main(String[] args) throws IOException {
