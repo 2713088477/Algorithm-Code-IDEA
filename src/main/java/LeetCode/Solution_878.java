@@ -1,5 +1,6 @@
 package LeetCode;
 
+//测试链接:https://leetcode.cn/problems/nth-magical-number/description/
 public class Solution_878 {
     public int nthMagicalNumber(int n, int a, int b) {
         long lcmNum = lcm(a,b);
