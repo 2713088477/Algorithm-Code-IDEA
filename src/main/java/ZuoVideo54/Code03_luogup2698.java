@@ -4,7 +4,7 @@ package ZuoVideo54;
 import java.io.*;
 import java.util.Arrays;
 
-//TODO
+//测试链接:https://www.luogu.com.cn/problem/P2698
 public class Code03_luogup2698 {
     public static int MAX_SIZE = (int) 1e5+1;
     public static int n,d;
@@ -54,14 +54,14 @@ public class Code03_luogup2698 {
         return max-min>=d;
     }
     public static void push(int r){
-        while(maxh<maxt && arr[r][1]>=arr[maxDeque[maxt]][1]){
+        while(maxh<maxt && arr[r][1]>=arr[maxDeque[maxt-1]][1]){
             maxt--;
         }
         maxDeque[maxt++] = r;
-        while(minh<mint && arr[r][1]<=arr[maxDeque[mint]][1]){
+        while(minh<mint && arr[r][1]<=arr[minDeque[mint-1]][1]){
             mint--;
         }
-        maxDeque[mint++] = r;
+        minDeque[mint++] = r;
     }
     public static void pop(int l){
         if(maxDeque[maxh]==l){
