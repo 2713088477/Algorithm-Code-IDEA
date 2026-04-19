@@ -13,6 +13,18 @@ package LeetCodeHot100;
  */
 //测试链接:https://leetcode.cn/problems/linked-list-cycle/description/?envType=study-plan-v2&envId=top-100-liked
 public class Solution_141 {
+    static class ListNode{
+        int val;
+        ListNode next;
+        ListNode(){
+            val = 0;
+            next = null;
+        }
+        ListNode(int x){
+            val = x;
+            next = null;
+        }
+    }
     
     public boolean hasCycle(ListNode head) {
         ListNode phead = new ListNode();
