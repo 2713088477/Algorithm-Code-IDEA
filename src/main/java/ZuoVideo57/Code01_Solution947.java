@@ -3,6 +3,7 @@ package ZuoVideo57;
 import java.util.HashMap;
 import java.util.Map;
 
+//测试链接:https://leetcode.cn/problems/most-stones-removed-with-same-row-or-column/description/
 public class Code01_Solution947 {
     public static Map<Integer,Integer> firtRow = new HashMap();
     public static Map<Integer,Integer> firtCol = new HashMap();
