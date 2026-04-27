@@ -1,87 +1,92 @@
 package ZuoVideo57;
-import java.util.Set;
-import java.util.HashSet;
+
+import java.util.Map;
+import java.util.HashMap;
+
 
 //测试链接：https://leetcode.cn/problems/minimize-malware-spread-ii/description/
-//TODO:这道题有错误
+//TODO:还是有问题
 public class Code04_Solution928 {
     public static int MAX_SIZE = 301;
     public static int[] father = new int[MAX_SIZE];
     public static int[] size = new int[MAX_SIZE];
+    public static int[] isInject = new int[MAX_SIZE];
     public static boolean[] isOrigin = new boolean[MAX_SIZE];
-    public static int[] isInject = new int[MAX_SIZE]; //如果isInject[i]=-1,表示这个集合已经被多个病毒侵蚀了，无法清除了
     public int minMalwareSpread(int[][] graph, int[] initial) {
         int len = graph.length;
         build(len,initial);
-        //将所有不是病毒的点合并起来
         for(int i=0;i<len;i++){
             if(isOrigin[i]) continue;
             for(int j=0;j<len;j++){
-                if(isOrigin[j] || graph[i][j]==0) continue;
-                union(i, j);
+                if(graph[i][j]==1 && !isOrigin[j]){
+                    union(i,j);
+                }
             }
         }
-        //现在开始将病毒加入到集合中
         for(int i=0;i<len;i++){
             if(!isOrigin[i]) continue;
             for(int j=0,fj;j<len;j++){
-                fj = find(j);
-                if(graph[i][j] == 1 && !isOrigin[fj]){
-                    if(isInject[fj]==0){
+                if(graph[i][j]==1){
+                    fj = find(j);
+                    if(isInject[fj]==-1){
                         isInject[fj] = i;
-                    }else if(isInject[fj]!=i){
-                        isInject[fj] = -1;
+                    }else if(isInject[fj] != i){
+                        isInject[fj] = -2;
                     }
                 }
             }
         }
-        //统计答案
+        Map<Integer,Integer> map = new HashMap<>();
+        for(int i=0,fi;i<len;i++){
+            if(isOrigin[i]) continue;
+            fi = find(i);
+            if(isInject[fi]>=0){
+                map.put(isInject[fi], size[fi] + map.getOrDefault(isInject[fi], 0));
+            }
+        }
+        for(int i=0;i<len;i++){
+            if(!isOrigin[i]) continue;
+            for(int j=0;j<len;j++){
+                if(graph[i][j]==1 && isOrigin[j]){
+                    map.put(i, map.getOrDefault(j, 0) + map.getOrDefault(i, 0));
+                    
+                }
+            }
+        }
         int maxSize = 0;
         int maxIndex = 0;
-        for(int i=0;i<len;i++){
-            if(!isOrigin[i]) continue;
-            Set<Integer> set = new HashSet<>();
-            int curSize = 1;
-            for(int j=0,fj;j<len;j++){
-                fj = find(j);
-                if(graph[i][j] == 1 && !isOrigin[fj] && isInject[fj]>0){
-                    if(!set.contains(fj)){
-                        curSize += size[fj];
-                        set.add(fj);
-                    }
-                }
+    
+        for(Map.Entry<Integer,Integer> m:map.entrySet()){
+            if(m.getValue()>maxSize){
+                maxSize = m.getValue();
+                maxIndex = m.getKey();
             }
-            if(curSize>maxSize){
-                maxSize = curSize;
-                maxIndex = i;
-            }
-            
         }
         return maxIndex;
-        
     }
-    public static void build(int len,int[] initial){
+    public void build(int len,int[] initial){
         for(int i=0;i<len;i++){
             father[i] = i;
-            isInject[i] = 0;//表示还没有被入侵
             size[i] = 1;
+            isInject[i] = -1;
+            isOrigin[i] = false;
         }
         for(int i=0;i<initial.length;i++){
-            isOrigin[initial[i]] = true ;
+            isOrigin[initial[i]] = true;
         }
     }
-    public static int find(int a){
+    public int find(int a){
         if(a != father[a]){
             father[a] = find(father[a]);
         }
         return father[a];
     }
-    public static void union(int a,int b){
+    public void union(int a,int b){
         int fa = find(a);
         int fb = find(b);
         if(fa != fb){
-            father[fa] = fb;
-            size[fb] += size[fa];
+            father[fb] = fa;
+            size[fa] += size[fb];
         }
     }
 }
