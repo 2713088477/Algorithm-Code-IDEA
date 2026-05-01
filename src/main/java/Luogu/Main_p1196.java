@@ -10,7 +10,7 @@ import java.io.StreamTokenizer;
 //测试链接:https://www.luogu.com.cn/problem/P1196
 //TODO:有问题
 public class Main_p1196 {
-        public static int MAX_SIZE = 30001;
+    public static int MAX_SIZE = 30001;
     public static int[] father = new int[MAX_SIZE];
     
     public static void main(String[] args) throws IOException {
@@ -30,7 +30,7 @@ public class Main_p1196 {
                 in.nextToken();
                 b = (int)in.nval; 
                 if(op.equals("M")){
-                    union(a, b);
+                    union(a, b);fcddf
                 }else if(op.equals("C")){
                     out.println(query(a, b));
                 }
