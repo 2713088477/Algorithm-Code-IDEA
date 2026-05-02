@@ -13,11 +13,11 @@ public class Code04_Solution803 {
         }
         //从顶部开始，现在还是1的洪水填充为2
         for(int i=0;i<col;i++){
-            if(grid[0][1]==1){
-                dfsInjection(0, i, 2);
+            if(grid[0][i]==1){
+                dfsFill(0, i, 2);
             }
         }
-        //倒放,洪水填充
+        //时光逆流,洪水填充
         int[] ans = new int[hits.length];
         for(int i=hits.length-1;i>=0;i--){
             grid[hits[i][0]][hits[i][1]]++;
@@ -26,14 +26,6 @@ public class Code04_Solution803 {
             }
         }
         return ans;
-    }
-    public void dfsInjection(int x,int y,int tag){
-        if(x<0 || x>=row || y<0 || y>=col || grid[x][y]!=1) return;
-        grid[x][y] = tag;
-        dfsInjection(x+1,y,tag);
-        dfsInjection(x-1,y,tag);
-        dfsInjection(x,y+1,tag);
-        dfsInjection(x,y-1,tag);
     }
     public int dfsFill(int x,int y,int tag){
         if(x<0 || x>=row || y<0 || y>=col || grid[x][y]!=1) return 0;
