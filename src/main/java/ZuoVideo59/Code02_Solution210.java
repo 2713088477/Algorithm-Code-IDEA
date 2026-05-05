@@ -3,7 +3,6 @@ package ZuoVideo59;
 import java.util.ArrayList;
 
 //测试链接:https://leetcode.cn/problems/course-schedule-ii/description/
-//TODO:目前有问题
 public class Code02_Solution210 {
     public static ArrayList<ArrayList<Integer>> edge = new ArrayList<>();
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -29,7 +28,7 @@ public class Code02_Solution210 {
             }
         }
         while(l<r){
-            for(int e: edge.get(l)){
+            for(int e: edge.get(deque[l])){
                 if(--indegree[e]==0){
                     deque[r++] = e;
                 }
