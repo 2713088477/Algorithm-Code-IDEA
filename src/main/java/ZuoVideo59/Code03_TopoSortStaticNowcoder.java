@@ -8,7 +8,12 @@ import java.io.*;
 public class Code03_TopoSortStaticNowcoder {
     public static int MAX_NODE = (int)2e5+1;
     public static int MAX_EDGE = (int)2e5+1;
-    public static ArrayList<ArrayList<Integer>> edge = new ArrayList<>(MAX_NODE);
+    //图的结构
+    public static int[] head = new int[MAX_NODE];
+    public static int[] next = new int[MAX_EDGE];
+    public static int[] to = new int[MAX_EDGE];
+    public static int edgeId = 1;
+
     public static int[] indegree = new int[MAX_NODE];
     public static int[] deque = new int[MAX_NODE];
     public static int l,r;
@@ -24,17 +29,14 @@ public class Code03_TopoSortStaticNowcoder {
             n = (int)in.nval;
             in.nextToken();
             m = (int)in.nval;
-            for(int i=0;i<=n;i++){
-                edge.add(new ArrayList<>());
-            }
-            int from,to;
+            int fromNode,toNode;
             //建图
             for(int i=0;i<m;i++){
                 in.nextToken();
-                from = (int)in.nval;
+                fromNode = (int)in.nval;
                 in.nextToken();
-                to = (int)in.nval;
-                addEdge(from, to);
+                toNode = (int)in.nval;
+                addEdge(fromNode, toNode);
             }
             //入度消除法实现拓扑排序
             for (int i = 1; i <= n; i++) {
@@ -43,9 +45,9 @@ public class Code03_TopoSortStaticNowcoder {
                 }
             }
             while(l<r){
-                for(int e:edge.get(deque[l])){
-                    if(--indegree[e]==0){
-                        deque[r++] = e;
+                for(int e = head[deque[l]];e >0;e = next[e]){
+                    if(--indegree[to[e]]==0){
+                        deque[r++] = to[e];
                     }
                 }
                 deque_cnt++;
@@ -69,13 +71,17 @@ public class Code03_TopoSortStaticNowcoder {
 
     }
     public static void clear(){
-        edge.clear();
+        Arrays.fill(head,0,n+1,0);
+        Arrays.fill(next,0,m+1,0);
+        Arrays.fill(to,0,m+1,0);
         l=r=0;
         deque_cnt = 0;
         Arrays.fill(indegree,1,n+1,0);
     }
-    public static void addEdge(int from,int to){
-        indegree[to]++;
-        edge.get(from).add(to);
+    public static void addEdge(int fromNode,int toNode){
+        indegree[toNode]++;
+        next[edgeId] = head[fromNode];
+        to[edgeId] = toNode;
+        head[fromNode] = edgeId++;
     }
 }
