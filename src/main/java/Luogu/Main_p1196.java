@@ -30,7 +30,7 @@ public class Main_p1196 {
                 in.nextToken();
                 b = (int)in.nval; 
                 if(op.equals("M")){
-                    union(a, b);fcddf
+                    union(a, b);
                 }else if(op.equals("C")){
                     out.println(query(a, b));
                 }
