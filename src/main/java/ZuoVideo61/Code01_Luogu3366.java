@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 
 //测试链接:https://www.luogu.com.cn/problem/P3366
+//k算法
 public class Code01_Luogu3366 {
 	public static int n,m;
 	public static int MAX_N = 5001,MAX_M=200001;
