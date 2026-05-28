@@ -1,9 +1,6 @@
 package ZuoVideo62;
 
-<<<<<<< HEAD
-=======
 import java.util.Arrays;
->>>>>>> e6fcb708e33fa9615bb9c96e5c2ba558ca16d3e5
 import java.util.PriorityQueue;
 
 //测试链接:https://leetcode.cn/problems/trapping-rain-water-ii/
