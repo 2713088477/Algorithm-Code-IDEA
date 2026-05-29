@@ -15,6 +15,7 @@ public class Code06_Solution126 {
 
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         build(wordList);
+        if(!word.contains(endWord)) return ans;
         if(bfs(beginWord,endWord)){
             dfs(endWord,beginWord);
         }
