@@ -23,23 +23,16 @@ public class Code02_Luogu4799 {
                 money[i] = (long) in.nval;
             }
         }
-        long lsize = dfs(0,n>>1,0,0,0);
-        long rsize = dfs(n>>1,n,0,n>>1,0);
-        System.out.println(Arrays.toString(left));
 
-        System.out.println(Arrays.toString(right));
     }
-    public static int dfs(int s,int e,long sum,int curIndex,int ansIndex){
-        if(curIndex<s || curIndex>e) return ansIndex;
-        if(curIndex == e){
-            if(sum <= m){
-                left[ansIndex++] = sum;
-            }
-            return ansIndex;
-        }
-        ansIndex = dfs(s,e,sum,curIndex+1,ansIndex);
-        ansIndex = dfs(s,e,sum+money[curIndex],curIndex+1,ansIndex);
-        return ansIndex;
+    public static int dfs(int s,int e,int[] ans,int sum,int ansIndex){
+//        if(s == e){
+//            ans[ansIndex++] = sum;
+//            return ansIndex;
+//        }
+//        int updateIndex = dfs(s + 1, e, ans, sum, ansIndex);
+//        dfs(s+1,e,ans,sum + money[s],updateIndex);
+        return 0;
     }
 
 }
