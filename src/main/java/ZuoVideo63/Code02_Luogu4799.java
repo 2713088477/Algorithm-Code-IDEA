@@ -40,7 +40,7 @@ public class Code02_Luogu4799 {
         Arrays.sort(rRes,0,rSize);
 
         long ans = 0;
-        int l = 0, r = n-1;
+        int l = 0, r = rSize-1;
         while(l<lSize){
             while(r>=0 && lRes[l]+rRes[r]>m){
                 r--;
