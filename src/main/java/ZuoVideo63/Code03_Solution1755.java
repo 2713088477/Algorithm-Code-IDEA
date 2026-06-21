@@ -8,7 +8,7 @@ public class Code03_Solution1755 {
     public static int[] numsArr;
     public static int[] lRes = new int[MAX_LEN];
     public static int[] rRes = new int[MAX_LEN];
-    public int minAbsDifference(int[] nums, int goal) {
+    public static int minAbsDifference(int[] nums, int goal) {
         numsArr = nums;
         int positive = 0,negative = 0;
         for(int num:nums){
@@ -25,13 +25,18 @@ public class Code03_Solution1755 {
         int mid = nums.length>>1;
         int lLen = f(lRes, 0, mid, 0, 0, 0);
         int rLen = f(rRes, mid, nums.length, 0, mid, 0);
-        for(int i=0;i<lLen;i++){
-            System.out.print(lRes[i]+" ");
+        Arrays.sort(lRes,0,lLen);
+        Arrays.sort(rRes,0,rLen);
+        int ans = Integer.MAX_VALUE;
+        int left =0,right = rLen-1;
+        for(;left<lLen;left++){
+            while(right>0 && Math.abs(goal-(lRes[left]+rRes[right])) >= Math.abs(goal-(lRes[left]+rRes[right-1])) ){
+                right--;
+            }
+            ans = Math.min(ans,Math.abs(goal-(lRes[left]+rRes[right])));
+
         }
-        System.out.println();
-
-
-        return 0;
+        return ans;
 
     }
     public static int f(int[] ansArr,int start,int end,int curSum,int curIndex,int ansLen){
@@ -43,9 +48,15 @@ public class Code03_Solution1755 {
         while (nextIndex<end && numsArr[nextIndex]==numsArr[curIndex]){
             nextIndex++;
         }
-        for(int i=0;i<nextIndex-curIndex;i++){
+        for(int i=0;i<=nextIndex-curIndex;i++){
             ansLen = f(ansArr,start,end,curSum+i*numsArr[curIndex],nextIndex,ansLen);
         }
         return ansLen;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{5,-7,3,5};
+        minAbsDifference(nums,6);
+
     }
 }

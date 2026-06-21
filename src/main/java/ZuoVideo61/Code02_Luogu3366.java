@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 //测试链接:https://www.luogu.com.cn/problem/P3366
-//k算法
+//p算法
 public class Code02_Luogu3366 {
 	public static int n,m;
 	public static void main(String[] args) throws IOException {
