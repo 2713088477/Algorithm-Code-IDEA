@@ -56,14 +56,13 @@ public class Code01_Solution743 {
 
 
     /**
-     * todo 有问题,需要后面再改
      * 反向索引堆(极致)
      * @param times
      * @param n
      * @param k
      * @return
      */
-    public int networkDelayTime2(int[][] times, int n, int k) {
+    public static int networkDelayTime2(int[][] times, int n, int k) {
         build(n);
         for(int[] time:times){
             int from = time[0],to = time[1],value = time[2];
@@ -132,7 +131,7 @@ public class Code01_Solution743 {
     }
     public static void justifyToTop(int heapIndex){
         int parent = (heapIndex-1)/2;
-        while(distance[minHeap[parent]] < distance[minHeap[heapIndex]]){
+        while(distance[minHeap[parent]] > distance[minHeap[heapIndex]]){
             swap(parent,heapIndex);
             heapIndex = parent;
             parent = (heapIndex-1)/2;
@@ -167,5 +166,33 @@ public class Code01_Solution743 {
         return pollNode;
     }
 
+    public static void main(String[] args) {
+        int[][] times = {
+                {1, 3, 68},
+                {1, 4, 20},
+                {4, 1, 65},
+                {3, 2, 74},
+                {2, 1, 44},
+                {3, 4, 61},
+                {4, 3, 68},
+                {3, 1, 26},
+                {5, 1, 60},
+                {5, 3, 3},
+                {4, 5, 5},
+                {2, 5, 36},
+                {2, 3, 94},
+                {1, 2, 0},
+                {3, 5, 90},
+                {2, 4, 28},
+                {4, 2, 12},
+                {5, 4, 52},
+                {5, 2, 85},
+                {1, 5, 42}
+        };
+        System.out.println(networkDelayTime2(times, 5, 4));
+    }
+
 
 }
+
+
