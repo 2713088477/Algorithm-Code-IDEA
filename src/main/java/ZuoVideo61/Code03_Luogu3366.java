@@ -39,6 +39,7 @@ public class Code03_Luogu3366 {
 				in.nextToken();
 				value = (int)in.nval;
 				addEdge(fromNode,toNode,value);
+				addEdge(toNode,fromNode,value);
 			}
 			addOrUpdateOrIgnore(1,0);
 			int ans = 0;
@@ -72,6 +73,7 @@ public class Code03_Luogu3366 {
 	public static void build(int n){
 		edgeId = 1;
 		heapSize = 0;
+		Arrays.fill(head,1,n+1,0);
 		Arrays.fill(where,1,n+1,-1);
 	}
 	public static void addEdge(int fromNode,int toNode,int value){
@@ -83,7 +85,7 @@ public class Code03_Luogu3366 {
 	public static void addOrUpdateOrIgnore(int nodeId,int dis){
 		if(where[nodeId] == -1){
 			heapInsert(nodeId,dis);
-		}else if(where[nodeId]>=0){
+		}else if(where[nodeId] >= 0){
 			int curHeapIndex = where[nodeId];
 			if(minHeap[curHeapIndex][1] > dis){
 				minHeap[curHeapIndex][1] = dis;
