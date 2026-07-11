@@ -16,6 +16,7 @@ public class Code05_Solution35 {
         for(int[] path:paths){
             int from = path[0],to = path[1],value = path[2];
             graph.get(from).add(new int[]{to,value});
+            graph.get(to).add(new int[]{from,value});
         }
         int[][] distance = new int[len][cnt+1];
         for(int[] dis:distance){
@@ -26,27 +27,31 @@ public class Code05_Solution35 {
         minHeap.add(new int[]{start,0,0});
         while(!minHeap.isEmpty()){
             int[] poll = minHeap.poll();
-            int nodeId = poll[0],curCnt = poll[1],curCost = poll[2];
-            if(visit[nodeId][curCnt]){
+            int nodeId = poll[0],curCharge = poll[1],curCost = poll[2];
+            if(visit[nodeId][curCharge]){
                 continue;
             }
-            visit[nodeId][curCnt] = true;
-            distance[nodeId][curCnt] = curCost;
+            visit[nodeId][curCharge] = true;
+            distance[nodeId][curCharge] = curCost;
             if(nodeId == end){
                 return curCost;
             }
             //扩点决策1:在当前充一格电
-            minHeap.add(new int[]{nodeId,curCnt+1,curCost+charge[nodeId]});
+            if(curCharge < cnt){
+                if(!visit[nodeId][curCharge+1] && curCost+charge[nodeId]<distance[nodeId][curCharge+1]){
+                    distance[nodeId][curCharge+1] = curCost+charge[nodeId];
+                    minHeap.add(new int[]{nodeId,curCharge+1,curCost+charge[nodeId]});
+                }
+            }
             //扩点决策2:不充电直接进入下一层
             for(int[] edge: graph.get(nodeId)){
                 int to = edge[0],weight = edge[1];
-                if(curCnt>=weight && !visit[to][curCnt-weight]){
-                    minHeap.add(new int[]{to,curCnt-weight,curCost+weight});
+                if(curCharge>=weight && !visit[to][curCharge-weight] && curCost+weight<distance[to][curCharge-weight]){
+                    distance[to][curCharge-weight] = curCost+weight;
+                    minHeap.add(new int[]{to,curCharge-weight,curCost+weight});
                 }
             }
-
         }
         return -1;
-
     }
 }
