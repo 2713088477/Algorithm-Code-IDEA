@@ -5,9 +5,10 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 
 //测试链接:https://www.luogu.com.cn/problem/P4568
-public class Code06_Solution4568 {
+//这道题暂时有问题
+public class Code06_file2_Solution4568 {
     public static int MAX_N = (int)1E4;
-    public static int MAX_M = (int)5E4+1;
+    public static int MAX_M = (int)5E5+1;
     public static int MAX_K = 11;
     //链式前向星
     public static int[] head = new int[MAX_N];
@@ -15,8 +16,9 @@ public class Code06_Solution4568 {
     public static int[] to = new int[MAX_M];
     public static int[] weight = new int[MAX_M];
     public static int edgeId = 1;
-    //语言自带的堆
-    public static PriorityQueue<int[]> minHeap = new PriorityQueue<>((a,b)->a[2]-b[2]);
+    //自己实现的堆结构
+    public static int[][] minHeap = new int[MAX_N*MAX_K][3];
+    public static int heapSize = 0;
     public static int n,m,k;
     public static int sNode, eNode;
     public static void main(String[] args) throws IOException {
@@ -30,9 +32,8 @@ public class Code06_Solution4568 {
             in.nextToken();
             k = (int)in.nval;
             build(n);
-            in.nextToken();
-            sNode = (int)in.nval;in.nextToken();
-            eNode = (int)in.nval;
+            in.nextToken();sNode = (int)in.nval;
+            in.nextToken();eNode = (int)in.nval;
             for(int i=0,from,to,w;i<m;i++){
                 in.nextToken();from = (int)in.nval;
                 in.nextToken();to = (int)in.nval;
@@ -45,9 +46,9 @@ public class Code06_Solution4568 {
                 Arrays.fill(dis,Integer.MAX_VALUE);
             }
             boolean[][] visit = new boolean[n][k+1];
-            minHeap.add(new int[]{sNode,0,0});
-            while(!minHeap.isEmpty()){
-                int[] poll = minHeap.poll();
+            add(new int[]{sNode,0,0});
+            while(!isEmpty()){
+                int[] poll = poll();
                 int pollNode = poll[0],freeCnt = poll[1],curPrice = poll[2];
                 if(visit[pollNode][freeCnt]){
                     continue;
@@ -62,12 +63,12 @@ public class Code06_Solution4568 {
                     int toNode = to[nextEdge],wei = weight[nextEdge];
                     //决策1:使用免费
                     if(freeCnt<k && !visit[toNode][freeCnt+1] && distance[toNode][freeCnt+1]>curPrice){
-                        minHeap.add(new int[]{toNode,freeCnt+1,curPrice});
+                        add(new int[]{toNode,freeCnt+1,curPrice});
                         distance[toNode][freeCnt+1] = curPrice;
                     }
                     //决策2:不使用免费
                     if(!visit[toNode][freeCnt] && distance[toNode][freeCnt] > curPrice+wei){
-                        minHeap.add(new int[]{toNode,freeCnt,curPrice + wei});
+                        add(new int[]{toNode,freeCnt,curPrice + wei});
                         distance[toNode][freeCnt] = curPrice+wei;
                     }
                 }
@@ -80,12 +81,30 @@ public class Code06_Solution4568 {
     public static void build(int n){
         Arrays.fill(head,0,n,0);
         edgeId = 1;
-        minHeap.clear();
+        heapSize = 0;
     }
     public static void addEdge(int from,int toNode,int w){
         next[edgeId] = head[from];
         to[edgeId] = toNode;
         weight[edgeId] = w;
         head[from] = edgeId++;
+    }
+    public static boolean isEmpty(){
+        return heapSize==0;
+    }
+    public static int[] poll(){
+        return minHeap[--heapSize];
+    }
+    public static void add(int[] arr){
+        int heapIndex = heapSize++;
+        while(minHeap[(heapIndex-1)/2][2] > arr[2]){
+            swap(heapIndex,(heapIndex-1)/2);
+            heapIndex = (heapIndex-1)/2;
+        }
+    }
+    public static void swap(int a,int b){
+        int[] tmp = minHeap[a];
+        minHeap[a] = minHeap[b];
+        minHeap[b] = tmp;
     }
 }
