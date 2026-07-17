@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 
 //测试链接:https://www.luogu.com.cn/problem/P4568
-//这道题暂时有问题
 public class Code06_file2_Solution4568 {
     public static int MAX_N = (int)1E4;
     public static int MAX_M = (int)5E5+1;
@@ -93,13 +92,27 @@ public class Code06_file2_Solution4568 {
         return heapSize==0;
     }
     public static int[] poll(){
-        return minHeap[--heapSize];
+        int[] pollArr = minHeap[0];
+        swap(0,--heapSize);
+        heapify(0);
+        return pollArr;
     }
     public static void add(int[] arr){
         int heapIndex = heapSize++;
-        while(minHeap[(heapIndex-1)/2][2] > arr[2]){
+        minHeap[heapIndex] = arr;
+        while(minHeap[(heapIndex-1)/2][2] > minHeap[heapIndex][2]){
             swap(heapIndex,(heapIndex-1)/2);
             heapIndex = (heapIndex-1)/2;
+        }
+    }
+    public static void heapify(int heapIndex){
+        int left = 2*heapIndex+1;
+        while(left < heapSize){
+            int best = left+1<heapSize && minHeap[left+1][2] < minHeap[left][2] ? left+1 : left;
+            if(minHeap[best][2] >= minHeap[heapIndex][2]) break;
+            swap(best,heapIndex);
+            heapIndex = best;
+            left = 2 * heapIndex+1;
         }
     }
     public static void swap(int a,int b){
