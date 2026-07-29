@@ -2,6 +2,7 @@ package LeetCodeHot100;
 
 import java.util.Arrays;
 
+//测试链接: https://leetcode.cn/problems/smallest-palindromic-rearrangement-i/?envType=daily-question&envId=2026-07-29
 public class Solution_3517 {
     public String smallestPalindrome(String s) {
         int length = s.length();
