@@ -33,12 +33,12 @@ public class Code01_Solution509 {
     //step1:存在大量的重复计算,step2:也是自定向下的,由于递归的存在所需要的栈空间也更多
     //step3:自下而上,减少递归的栈空间
     public int fib3(int n){
-        int[] arr = new int[n+2];//这里也应该用静态空间,这里与step2以示区分
-        arr[0]=0;arr[1]=1;
-        for(int i=2;i<arr.length;i++){
-            arr[i]=arr[i-1]+arr[i-2];
+        int[] dp = new int[n+2];//这里也应该用静态空间,这里与step2以示区分
+        dp[0]=0;dp[1]=1;
+        for(int i=2;i<dp.length;i++){
+            dp[i]=dp[i-1]+dp[i-2];
         }
-        return arr[n];
+        return dp[n];
     }
 
     //step4:step3需要的辅助空间太多,而每个arr[i]只依赖于arr[i-1]和arr[i-2],所以我们使用迭代减少空间消耗
