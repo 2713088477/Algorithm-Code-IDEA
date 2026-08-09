@@ -48,6 +48,24 @@ public class Code02_Solution983 {
         return ans;
     }
 
+    //3.从底到顶的动态规划
+    public int mincostTickets3(int[] days, int[] costs) {
+        int len = days.length;
+        int[] dp = new int[len+1];
+        Arrays.fill(dp,Integer.MAX_VALUE);
+        dp[len] = 0;
+        for(int index = len -1;index>=0;index--){
+            for(int attempt = 0,nextIndex = index;attempt<costs.length;attempt++){
+                while (nextIndex<len && days[index] + duration[attempt] > days[nextIndex]){
+                    nextIndex++;
+                }
+                dp[index] = Math.min(dp[index],costs[attempt] + dp[nextIndex]);
+            }
+        }
+        return dp[0];
+    }
+
+
 
 
 }
