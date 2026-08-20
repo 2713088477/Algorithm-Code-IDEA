@@ -1,12 +1,11 @@
 package LeetCode;
 
 //测试链接:https://leetcode.cn/problems/nth-magical-number/description/
-//todo: WA
 public class Solution_878 {
     private static int mod = (int)1e9+7;
     public int nthMagicalNumber(int n, int a, int b) {
         int lcm = lcm(a, b);
-        long l = Math.min(a, b),r = Math.min(a, b)*n;
+        long l = Math.min(a, b),r = (long)Math.min(a, b)*n;
         while(l<=r){
             long mid = l + (r-l)/2;
             if(mid/a+mid/b-mid/lcm >= n){
