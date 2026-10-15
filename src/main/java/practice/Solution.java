@@ -1,54 +1,54 @@
 package practice;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 
-
-//测试链接:https://leetcode.cn/problems/word-ladder/
 public class Solution {
-    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        HashSet<String> word = new HashSet<>(wordList);
-        if(!word.contains(endWord)) return 0;
-        HashSet<String> small = new HashSet<>();
-        HashSet<String> big = new HashSet<>();
-        HashSet<String> nextLevel = new HashSet<>();
-        small.add(beginWord);big.add(endWord);
-        int level = 2;
-        while(!small.isEmpty()){
-            for(String curWord:small){
-                char[] chars = curWord.toCharArray();
-                for(int i=0;i<chars.length;i++){
-                    char old = chars[i];
-                    for(char tmp='a';tmp<='z';tmp++){
-                        chars[i] = tmp;
-                        String newWord = String.valueOf(chars);
-                        if(big.contains(newWord)){
-                            return level;
-                        }
-                        if(!newWord.equals(curWord) && word.contains(newWord)){
-                            word.remove(newWord);
-                            nextLevel.add(newWord);
-                            System.out.println(String.format("在%d层找到了%s",level,newWord));
-                        }
-                    }
-                    chars[i] = old;
-                }
-            }
-            level++;
+    public static int MAX_SIZE = 100;
+    public static int[] arr = new int[MAX_SIZE];
 
-            small.clear();
-            if(nextLevel.size()>big.size()){
-                HashSet<String> tmp = big;
-                big = nextLevel;
-                nextLevel = small;
-                small = tmp;
-            }else{
-                HashSet<String> tmp = small;
-                small = nextLevel;
-                nextLevel = tmp;
-            }
+    public static void main(String[] args) {
+        for(int i=0;i<MAX_SIZE;i++){
+            arr[i] = (int)(Math.random()*(MAX_SIZE+1));
         }
-        return 0;
+        System.out.println("排序之前:");
+        System.out.println(Arrays.toString(arr));
+        quickSort(arr);
+        System.out.println("排序后:");
+        System.out.println(Arrays.toString(arr));
     }
+    public static void quickSort(int[] nums){
+        quickSortByRange(nums,0,nums.length-1);
+    }
+    public static void quickSortByRange(int[] nums,int left,int right){
+        if(left<right){
+            random(nums,left,right);
+            int stander = nums[left];
+            int l=left,r=right;
+            while(l<r){
+                while(l<r && nums[r] >= stander){
+                    r--;
+                }
+                swap(nums,l,r);
+                while(l<r && nums[l] < stander){
+                    l++;
+                }
+                swap(nums,l,r);
+            }
+            quickSortByRange(nums,left,r-1);
+            quickSortByRange(nums,r+1,right);
+        }
+    }
+    //将[left,right]中随机选出一位，与nums[left]交换
+    public static void random(int[] nums,int left,int right){
+        // [0,1) [left,right]->[0,right-left]
+        int index = (int)(Math.random()*(right-left+1)) + left;
+        swap(nums,index,left);
+    }
+    public static void swap(int[] nums,int left,int right){
+        if(left == right) return;
+        nums[left] = nums[left] ^ nums[right];
+        nums[right] = nums[left] ^ nums[right];
+        nums[left] = nums[left] ^ nums[right];
+    }
+
 }
